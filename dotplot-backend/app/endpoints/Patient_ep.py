@@ -43,22 +43,21 @@ def author_endpoint():
 #         return jsonify({"message": "Author created successfully"}), 200
 
 
-# @patient_route.route('/author/<id>',methods=['GET','DELETE','PATCH'])
-# @jwt_required()
-# def get_author(id):
+@patient_route.route('/patient/<id>',methods=['GET','DELETE','PATCH'])
+def get_author(id):
 
 
-#     author = author_repo.get_by_id(id) 
+    patient = patient_db.get_by_id(id) 
 
-#     if author == None:
-#         response = {
-#         "error": "Bad Request",
-#         "message": "Author with given ID does not exist"
-#         }
-#         return jsonify(response),400
+    if patient == None:
+        response = {
+        "error": "Bad Request",
+        "message": "Patient with given ID does not exist"
+        }
+        return jsonify(response),400
     
-#     if request.method == 'GET':
-#         return author.to_dict()
+    if request.method == 'GET':
+        return patient.to_dict()
     
 #     if request.method == 'DELETE':
 #         author_repo.delete_(author)
