@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/app/components/Navbar";
+import Dropdown from "../components/dropdown";
 import { IPatient } from "@/app/models/patient";
 
 import React, { useState, useMemo } from "react";
@@ -13,9 +14,20 @@ interface SortConfig {
   direction: "ascending" | "descending";
 }
 
+const titleToProp: { [key: string]: keyof IPatient } = {
+  Id: "id",
+  Name: "patient_name",
+  Age: "age",
+  Height: "height",
+  Weight: "weight",
+  "BC History": "bc_history",
+};
+type TitleToPropKeys = keyof typeof titleToProp;
+
 export default function PatientList({ patients }: { patients: IPatient[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+  const [filterKey, setFilterKey] = useState<TitleToPropKeys>("Name");
   const router = useRouter();
   const getSortIndicator = (key: SortKey, title: string) => {
     if (!sortConfig || sortConfig.key !== key) {
@@ -56,26 +68,43 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
     setSortConfig({ key, direction });
   };
 
-  const filteredPatients = sortedPatients.filter((patient) =>
-    patient.patient_name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  function filteredPatients(key: keyof IPatient) {
+    return sortedPatients.filter((patient: IPatient) =>
+      String(patient[key]).toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
+  function onSelect(option: TitleToPropKeys) {
+    setFilterKey(option);
+  }
 
   return (
     <div className="flex flex-col justify-center items-center">
       <Navbar />
-      <div className="container mx-auto p-4 content-center	">
-        <div className="z-10 bg-white shadow-md p-4">
+      <div className="container mx-auto p-4 content-center ">
+        <div className="z-10 bg-white shadow-md p-4 flex flex-row">
           <input
             type="text"
-            placeholder="Search by name"
+            placeholder={`Search by ${filterKey}`}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="mb-4 p-2 border rounded-md w-full"
+            className="mb-4 p-4 border rounded-md w-full"
           />
+          <Dropdown
+            options={["Id", "Name", "Age", "Height", "Weight", "BC History"]}
+            onSelect={onSelect}
+            buttonText={`sort by ${filterKey}:▼`}
+          ></Dropdown>
         </div>
         <table className="min-w-full bg-white border border-gray-200 shadow-sm">
           <thead>
             <tr>
+              <th
+                className="p-3 border-b-2 border-gray-200 cursor-pointer text-center"
+                onClick={() => requestSort("id")}
+              >
+                {getSortIndicator("id", "Id")}
+              </th>
               <th
                 className="p-3 border-b-2 border-gray-200 cursor-pointer text-center"
                 onClick={() => requestSort("patient_name")}
@@ -109,7 +138,7 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
             </tr>
           </thead>
           <tbody>
-            {filteredPatients.map((patient) => (
+            {filteredPatients(titleToProp[filterKey]).map((patient) => (
               <tr
                 onClick={() => {
                   router.push("/patient/" + patient.id);
@@ -117,6 +146,7 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
                 key={patient.id}
                 className="hover:bg-gray-100 cursor-pointer"
               >
+                <td className="p-3 border-b text-center">{patient.id}</td>
                 <td className="p-3 border-b text-center">
                   {patient.patient_name}
                 </td>
@@ -131,10 +161,8 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
           </tbody>
         </table>
       </div>
-      {!!patients && (
-        <h1 className="text-center  text-xl">
-          No Patients Found (is the backend running?)
-        </h1>
+      {!filteredPatients(titleToProp[filterKey]).length && (
+        <h1 className="text-center text-xl">No Patients Found</h1>
       )}
     </div>
   );

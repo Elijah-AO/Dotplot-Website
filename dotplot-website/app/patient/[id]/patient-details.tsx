@@ -1,5 +1,6 @@
 import { usePathname } from "next/navigation";
 import { IPatient } from "@/app/models/patient";
+import ExpandableImage from "./expandable-image";
 
 export default function PatientDetails({ patient }: { patient: IPatient }) {
   return (
@@ -42,6 +43,9 @@ export default function PatientDetails({ patient }: { patient: IPatient }) {
               <th className="py-2 px-4 border-b-2 border-gray-200 text-left">
                 Diagnosis
               </th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 text-left">
+                US Scan
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -52,6 +56,17 @@ export default function PatientDetails({ patient }: { patient: IPatient }) {
                 </td>
                 <td className="py-2 px-4 border-b">{scan.coordinates}</td>
                 <td className="py-2 px-4 border-b">{scan.diagnosis}</td>
+                <td className="py-2 px-4 border-b flex items-center justify-center">
+                  <ExpandableImage
+                    src={`http://localhost:5000/api/us-scan/${patient.US_scans[0].id}`}
+                    alt={"ultrasound scan"}
+                  ></ExpandableImage>
+                  {/* <img
+                    alt={"ultrasound scan"}
+                    src={`http://localhost:5000/api/us-scan/${patient.US_scans[0].id}`}
+                    className="object-scale-down hover:brightness-50"
+                  ></img> */}
+                </td>
               </tr>
             ))}
           </tbody>
