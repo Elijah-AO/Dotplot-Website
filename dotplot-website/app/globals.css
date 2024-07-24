@@ -2,4 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* globals.css */
+:root {
+    --custom-primary: #FFF8F3;
+    --custom-secondary: #405D72;
+  }
+  
+  body {
+    background-color: var(--custom-primary);
+    color: var(--custom-secondary);
+  }
+  
