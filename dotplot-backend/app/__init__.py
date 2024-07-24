@@ -13,8 +13,10 @@ def create_app():
 
     CORS(backend)
     password = os.getenv('PASSWORD')
+    db_port = os.getenv('DATABASE_SERVER_PORT')
+    db_name = os.getenv('DATABASE_NAME')
     
-    backend.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://postgres:"+password+"@localhost:5432/dotplotwebsite"
+    backend.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://postgres:{password}@localhost:{db_port}/{db_name}"
 
     db.init_app(backend)
 

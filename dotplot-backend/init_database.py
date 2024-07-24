@@ -9,10 +9,12 @@ import os
 
 load_dotenv()
 password = os.getenv('PASSWORD')
+db_port = os.getenv('DATABASE_SERVER_PORT')
+db_name = os.getenv('DATABASE_NAME')
 
 db = SQLAlchemy()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://postgres:"+password+"@localhost:5432/dotplotwebsite"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://postgres:{password}@localhost:{db_port}/{db_name}"
 db.init_app(app)
 
 class Patient(db.Model):
