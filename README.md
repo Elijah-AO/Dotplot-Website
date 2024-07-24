@@ -9,7 +9,8 @@ Website for Tech Academia X Dotplot Hackathon
 1. Install python
 2. cd to the `dotplot-backend` folder
 3. run: `pip install -r requirements.txt`
-4. run: `python init_database.py`
+4. change the values in the .env file to match the PostgreSQL server on your device
+5. run: `python init_database.py`
 
 ## Running the Server
 
