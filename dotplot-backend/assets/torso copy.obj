@@ -1,6 +1,6 @@
 # Blender 3.6.4
 # www.blender.org
-mtllib model_material.mtl
+mtllib hackathon_model_template.mtl
 o Body_Plane.004
 v 0.033348 0.540369 0.035631
 v 0.043949 0.542645 0.031218

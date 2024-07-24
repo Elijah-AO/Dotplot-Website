@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/app/components/Navbar";
 import Dropdown from "../components/dropdown";
 import { IPatient } from "@/app/models/patient";
 
@@ -79,8 +78,7 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <Navbar />
+    <div id="1" className="flex flex-col justify-center items-center">
       <div className="container mx-auto p-4 content-center ">
         <div className="z-10 bg-white shadow-md p-4 flex flex-row">
           <input
@@ -93,7 +91,11 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
           <Dropdown
             options={["Id", "Name", "Age", "Height", "Weight", "BC History"]}
             onSelect={onSelect}
-            buttonText={`sort by ${filterKey}:▼`}
+            buttonText={
+              <span>
+                Search by <strong className="font-bold">{filterKey}</strong>:▼
+              </span>
+            }
           ></Dropdown>
         </div>
         <table className="min-w-full bg-white border border-gray-200 shadow-sm">

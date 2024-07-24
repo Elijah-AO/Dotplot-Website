@@ -4,7 +4,7 @@ import ExpandableImage from "./expandable-image";
 
 export default function PatientDetails({ patient }: { patient: IPatient }) {
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white shadow-md rounded-md">
+    <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-md flex-1">
       <h2 className="text-2xl font-bold mb-4">Patient Details</h2>
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div>
@@ -58,7 +58,7 @@ export default function PatientDetails({ patient }: { patient: IPatient }) {
                 <td className="py-2 px-4 border-b">{scan.diagnosis}</td>
                 <td className="py-2 px-4 border-b flex items-center justify-center">
                   <ExpandableImage
-                    src={`http://localhost:5000/api/us-scan/${patient.US_scans[0].id}`}
+                    src={`http://localhost:5000/api/us-scan/image/${scan.id}`}
                     alt={"ultrasound scan"}
                   ></ExpandableImage>
                   {/* <img

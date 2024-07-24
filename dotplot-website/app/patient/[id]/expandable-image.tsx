@@ -44,6 +44,11 @@ export default function ExpandableImage({ src, alt }: Props) {
           position: isFullscreen ? "fixed" : "relative",
         }}
       >
+        {isLoading && !hasError && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <FaSpinner className="animate-spin text-gray-500 text-3xl" />
+          </div>
+        )}
         <img
           alt={alt}
           src={src}
@@ -62,15 +67,10 @@ export default function ExpandableImage({ src, alt }: Props) {
             maxWidth: isFullscreen ? "30vw" : "100px", // Initial width for non-fullscreen
           }}
         />
-        {isLoading && !hasError && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <FaSpinner className="animate-spin text-gray-500 text-3xl" />
-          </div>
-        )}
 
         {hasError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-red-200">
-            <p className="text-red-600">Failed to load image</p>
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+            <p className="text-gray-700 text-center">No Image</p>
           </div>
         )}
         {!isFullscreen && (

@@ -1,5 +1,6 @@
 import PatientList from "./patient_list";
 import { IPatient } from "@/app/models/patient";
+import Link from "next/link";
 
 export default async function Patients() {
   var patients: IPatient[] = [];
@@ -8,7 +9,7 @@ export default async function Patients() {
     var patients: IPatient[] = await res.json();
   } catch (error) {
     return {
-      message: "Backend is not running",
+      message: "error messaging backend",
     };
   }
   return (

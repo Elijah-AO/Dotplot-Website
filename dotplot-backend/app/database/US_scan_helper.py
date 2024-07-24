@@ -9,6 +9,8 @@ def save_(us_scan:US_scan):
 def get_by_id(id:int) -> US_scan:
     return db.session.execute(select(US_scan).where(US_scan.id == id)).scalar_one_or_none()
 
+def get_all():
+    return db.session.execute(select(US_scan).where()).scalars()
 
 def delete_(us_scan:US_scan):
     db.session.delete(us_scan)
