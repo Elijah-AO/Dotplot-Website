@@ -21,9 +21,9 @@ def create_app():
     db.init_app(backend)
 
     from app.endpoints.Patient_ep import patient_route
-    # from app.endpoints.US_scan_ep import us_scan_route
+    from app.endpoints.US_scan_ep import us_scan_route
 
     backend.register_blueprint(patient_route, url_prefix='/api')
-    # backend.register_blueprint(us_scan_route, url_prefix='/api')
+    backend.register_blueprint(us_scan_route, url_prefix='/api')
 
     backend.run()
