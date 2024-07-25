@@ -11,7 +11,7 @@ load_dotenv()
 password = os.getenv('PASSWORD')
 db_port = os.getenv('DATABASE_SERVER_PORT')
 db_name = os.getenv('DATABASE_NAME')
-
+print(db_port)
 db = SQLAlchemy()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://postgres:{password}@localhost:{db_port}/{db_name}"

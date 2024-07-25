@@ -4,8 +4,8 @@
 
 /* globals.css */
 :root {
-    --custom-primary: #FFF8F3;
-    --custom-secondary: #405D72;
+    --custom-primary: #120032;
+    --custom-secondary: #FFF8F3;
   }
   
   body {
@@ -13,3 +13,4 @@
     color: var(--custom-secondary);
   }
   
+ 

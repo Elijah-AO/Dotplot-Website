@@ -3,15 +3,15 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <div className="top-0 navbar bg-tertiary">
+    <div className="top-0 navbar" style={{ backgroundColor: '#120032' }}>
       <div className="flex-1 space-x-4">
         <Link href={"/"}>
           <Image
             className="rounded-full"
-            src="/logo.jpeg"
+            src="/tt_logo.png"
             alt="logo"
-            width={50}
-            height={50}
+            width={150}
+            height={100}
           />
         </Link>
       </div>

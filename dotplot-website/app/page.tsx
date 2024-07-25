@@ -13,12 +13,11 @@ export default function Home() {
     >
       <div className="flex flex-col gap-6 items-center">
         <Typography className="max-w-2xl" variant="h1">
-          Information you need during emergencies
+          Vital data when it matters most
         </Typography>
         <Typography className="max-w-2xl" variant="h5">
-          Quickly find, update and retrieve patient records with ease,
-            all in one place. Use Dotplot to see accurate models for 3D breast 
-            lesion imaging and more.
+        Quickly find, update, and retrieve patient records with accurate 3D tumor models 
+          for effective emergency response.
         </Typography>
         <Link
           href="https://map.sistilli.dev/public/coding/SaaS+Boilerplate"
@@ -31,8 +30,8 @@ export default function Home() {
         <Image
           width={1024}
           height={632}
-          alt="Pandem.dev hero image"
-          src="/hero1.png"
+          alt="tt.dev hero image"
+          src="/Green_tt.png"
         />
       </div>
       <div className="flex flex-col md:pt-24 md:gap-36 gap-24 items-center">
@@ -71,7 +70,7 @@ export default function Home() {
             width={1024}
             height={632}
             alt="Pandem.dev hero image"
-            src="/hero1.png"
+            src="/tt_aboutUs.png"
           />
         </div>
         <div className="flex flex-col gap-6 items-center">
