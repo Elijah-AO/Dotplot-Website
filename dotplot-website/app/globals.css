@@ -13,4 +13,18 @@
     color: var(--custom-secondary);
   }
   
+ tr {
+    color:black
+ }
+
+ p {
+  color:#120032
+ }
+
+ h2 {
+  color:#120032
+ }
  
+ h3 {
+  color:#120032
+ }

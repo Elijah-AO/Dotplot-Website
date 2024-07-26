@@ -4,7 +4,7 @@ import ExpandableImage from "./expandable-image";
 
 export default function PatientDetails({ patient }: { patient: IPatient }) {
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-md flex-1">
+    <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-md flex-1" style={{ backgroundColor: '#F0F8FF' }}>
       <h2 className="text-2xl font-bold mb-4">Patient Details</h2>
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div>
@@ -31,7 +31,7 @@ export default function PatientDetails({ patient }: { patient: IPatient }) {
 
       <h3 className="text-xl font-bold mb-4">Ultrasound Scans</h3>
       {patient.US_scans.length > 0 ? (
-        <table className="min-w-full bg-white border border-gray-200">
+        <table className="min-w-full bg-white border border-gray-200" style={{ backgroundColor: '#F0F8FF' }}>
           <thead>
             <tr>
               <th className="py-2 px-4 border-b-2 border-gray-200 text-left">
