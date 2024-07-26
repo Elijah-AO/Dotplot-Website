@@ -10,47 +10,35 @@ patient_route = Blueprint('patients',__name__)
 def patient_endpoint():
     if request.method == 'GET':
         all_patients = [patient.to_dict() for patient in patient_db.get_all()]
-        return all_patients,200
+        return jsonify(all_patients), 200
     if request.method == 'POST':
-        patient_name = request.json.get("patient_name", None)
-        age = request.json.get("age", None)
-        height = request.json.get("height", None)
-        weight = request.json.get("weight", None)
-        bc_history = request.json.get("bc_history", None)
-
-        if not patient_name or not age or not height or not weight or not bc_history:
-            return {"error":"please provide patient_name, age, height, weight and bc_history"},400
         try:
-            patient = US_scan(patient_name=patient_name,age=int(age),height=int(height),weight=int(weight),bc_history=bool(bc_history))
+            data = request.json
+            print("Received data:", data)  # Log received data
+            patient_name = data.get("patient_name")
+            age = data.get("age")
+            height = data.get("height")
+            weight = data.get("weight")
+            bc_history = data.get("bc_history")
+
+            if not patient_name or not age or not height or not weight or bc_history is None:
+                print("Missing required fields")  # Log missing fields
+                return jsonify({"error": "Please provide patient_name, age, height, weight, and bc_history"}), 400
+
+            patient = Patient(
+                patient_name=patient_name,
+                age=int(age),
+                height=int(height),
+                weight=int(weight),
+                bc_history=bc_history == 'true'
+            )
             patient_db.save_(patient)
-            return {"msg":f"saved patient with id {patient.id}"}
-        except Exception:
-            return {"error":str(Exception)},400
+            return jsonify({"msg": f"Saved patient with id {patient.id}"}), 200
+        except Exception as e:
+            print("Error:", str(e))  # Error Log
+            return jsonify({"error": str(e)}), 400
         
-@patient_route.route('/api/addPatient', methods=['POST'])
-def add_patient():
-    try:
-        data = request.json
-        patient_name = data.get("patient_name")
-        age = data.get("age")
-        height = data.get("height")
-        weight = data.get("weight")
-        bc_history = data.get("bc_history")
-
-        if not patient_name or not age or not height or not weight or bc_history is None:
-            return jsonify({"error": "Please provide patient_name, age, height, weight, and bc_history"}), 400
-
-        patient = Patient(
-            patient_name=patient_name,
-            age=int(age),
-            height=int(height),
-            weight=int(weight),
-            bc_history=bc_history == 'true'
-        )
-        patient_db.save_(patient)
-        return jsonify({"msg": f"Saved patient with id {patient.id}"}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        
 
 @patient_route.route('/patient/<id>',methods=['GET','DELETE','PATCH'])
 def get_patient(id):
