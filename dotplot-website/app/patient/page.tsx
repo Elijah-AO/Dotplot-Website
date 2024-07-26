@@ -2,6 +2,7 @@ import PatientList from "./patient_list";
 import { IPatient } from "@/app/models/patient";
 import Link from "next/link";
 
+
 export default async function Patients() {
   var patients: IPatient[] = [];
   try {

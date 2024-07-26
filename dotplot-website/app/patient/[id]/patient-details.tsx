@@ -1,6 +1,7 @@
 import { usePathname } from "next/navigation";
 import { IPatient } from "@/app/models/patient";
 import ExpandableImage from "./expandable-image";
+import './home.css';
 
 export default function PatientDetails({ patient }: { patient: IPatient }) {
   return (

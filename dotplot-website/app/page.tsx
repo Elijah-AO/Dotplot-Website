@@ -35,19 +35,19 @@ export default function Home() {
         />
       </div>
       <div className="flex flex-col md:pt-24 md:gap-36 gap-24 items-center">
-        <div className="flex flex-col gap-12 items-center">
+        <div className="flex flex-col gap-12 items-center" >
           <Typography className="max-w-2xl" variant="h1">
             Quick solutions, less stress
           </Typography>
-          <div className="flex md:flex-row flex-col gap-12">
+          <div className="flex md:flex-row flex-col gap-12" >
             <Feature
               icon={<Timer size={24} />}
-              headline="Fix emergencies fast"
+              headline="Fix emergencies fast" 
               description="Save 20-30 minutes per on-call ticket - no more searching for relevant issues and runbooks"
             />
             <Feature
               icon={<ArrowUpDown size={24} />}
-              headline="Universally compatible"
+              headline= "Universally compatible"
               description="Works with PagerDuty, Jira, or custom Slack alerts—Pandem integrates with any system"
             />
             <Feature

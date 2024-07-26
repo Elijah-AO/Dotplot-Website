@@ -14,13 +14,13 @@ export default function Footer() {
           >
             <Image
                 className='rounded-full'
-                src="/logo.jpeg"
+                src="/tt_logo.png"
                 alt="Dotplot Logo"
                 width={30}
                 height={30}
             />
             <Typography className="!text-white !text-base font-medium ">
-              Pandem
+              TumorTracker
             </Typography>
           </Link>
         </div>
