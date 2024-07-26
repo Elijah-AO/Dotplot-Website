@@ -26,6 +26,31 @@ def patient_endpoint():
             return {"msg":f"saved patient with id {patient.id}"}
         except Exception:
             return {"error":str(Exception)},400
+        
+@patient_route.route('/api/addPatient', methods=['POST'])
+def add_patient():
+    try:
+        data = request.json
+        patient_name = data.get("patient_name")
+        age = data.get("age")
+        height = data.get("height")
+        weight = data.get("weight")
+        bc_history = data.get("bc_history")
+
+        if not patient_name or not age or not height or not weight or bc_history is None:
+            return jsonify({"error": "Please provide patient_name, age, height, weight, and bc_history"}), 400
+
+        patient = Patient(
+            patient_name=patient_name,
+            age=int(age),
+            height=int(height),
+            weight=int(weight),
+            bc_history=bc_history == 'true'
+        )
+        patient_db.save_(patient)
+        return jsonify({"msg": f"Saved patient with id {patient.id}"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @patient_route.route('/patient/<id>',methods=['GET','DELETE','PATCH'])
 def get_patient(id):

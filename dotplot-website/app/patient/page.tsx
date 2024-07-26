@@ -14,6 +14,12 @@ export default async function Patients() {
   }
   return (
     <div className="">
+      <Link href="/addPatient">
+        <button className="m-3 bg-black h-min p-3 hover:bg-gray-900 hover:shadow-md rounded-md text-gray-100 hover:text-gray-400 transition-all duration-200 ">
+          Add New Patient
+        </button>
+      </Link>
+
       <PatientList patients={patients} />
     </div>
   );
