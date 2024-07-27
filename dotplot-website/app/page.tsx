@@ -44,7 +44,7 @@ export default function Home() {
         </Link>
         <Image
           className='rounded-2xl'
-          width={1024}
+          width={1023}
           height={632}
           alt="/hero_tt.jpg "
           src="/hero_tt.jpg"
