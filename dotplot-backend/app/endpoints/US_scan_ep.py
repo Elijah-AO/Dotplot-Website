@@ -45,7 +45,8 @@ def image_endpoint(id):
         scan = US_scan_db.get_by_id(id)
         if not scan:
             return {"error":"invalid US scan ID"},404
-        image_path = path.join(IMAGE_DIR,f"{scan.id}.png")
+        dir = path.join("..","assets","US_scans")
+        image_path = path.join(dir,f"{scan.id}.png")
         return send_file(image_path, mimetype='image/png')
     
 
