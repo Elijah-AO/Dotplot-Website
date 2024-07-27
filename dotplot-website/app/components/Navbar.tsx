@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { color } from "three/examples/jsm/nodes/Nodes.js";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   return (
@@ -43,24 +44,27 @@ export default function Navbar() {
         
         {/* </div> */}
       </div>
-      <SignedIn>
-        <UserButton showName />
-      </SignedIn>
-      <SignedOut>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1 space-x-4">
+        <li className="pr-4">
+            <ThemeToggle />
+        </li>
+        <SignedIn>
+            <UserButton showName />
+        </SignedIn>
+        <SignedOut>
+            <ul className="menu menu-horizontal px-1 space-x-4 flex items-center">
 
-          <li className="btn bg-primary text-secondary border-none hover:bg-tertiary rounded-full">
-              <Link href={"/login"}>Log in</Link>
-          </li>
+                <li className="btn bg-primary text-secondary border-none hover:bg-tertiary rounded-full">
+                    <Link href={"/login"}>Log in</Link>
+                </li>
 
-          <li className="btn bg-secondary text-primary border-none hover:bg-tertiary">
-              <Link href={"/signup"}>Sign Up</Link>
-          </li>
+                <li className="btn bg-secondary text-primary border-none hover:bg-tertiary">
+                    <Link href={"/signup"}>Sign Up</Link>
+                </li>
           
-        </ul>
+            </ul>
+            </SignedOut> 
       </div>
-        </SignedOut>
     </div>
   );
 }

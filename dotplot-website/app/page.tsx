@@ -1,3 +1,5 @@
+"use client";
+
 import Typography from '@/app/components/typography'
 import Image from 'next/image'
 import Feature from '@/app/components/feature'
@@ -5,9 +7,20 @@ import { ArrowUpDown, Timer, Workflow } from 'lucide-react'
 import Link from 'next/link'
 import Redirect from './lib/Redirect'
 import './globals.css'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs'
 
 export default function Home() {
-    <Redirect />
+    const router = useRouter();
+    const { isLoaded, isSignedIn } = useUser();
+  
+    useEffect(() => {
+      if (isLoaded && isSignedIn) {
+        router.push('/dashboard');
+      }
+    }, [isLoaded, isSignedIn, router]);
+
   return (
     <div
       className="flex flex-col h-full md:py-36 md:px-32 pt-11 pb-24 px-8 w-full
@@ -65,13 +78,13 @@ export default function Home() {
           <Typography className="max-w-2xl" variant="h1">
             About us
           </Typography>
-          <Typography className="max-w-4xl" variant="p">
+          <div>
           At TumorTracker, we specialize in developing advanced 3D models tailored 
           for healthcare professionals, providing detailed and intuitive visualizations 
           of patient data. Our innovative solutions enable doctors to effortlessly access 
           and interpret patient information by simply searching for their names, enhancing 
           diagnostic accuracy and improving patient care.
-          </Typography>
+          </div>
         </div>
         <div className="flex flex-col gap-6 items-center">
           <Typography className="max-w-2xl" variant="h1">
