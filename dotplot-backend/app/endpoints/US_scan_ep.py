@@ -4,7 +4,7 @@ from datetime import datetime
 
 from ..database import US_scan_helper as US_scan_db
 from ..database.models import US_scan
-IMAGE_DIR = path.join("..","assets","US_scans")
+IMAGE_DIR = "assets/US_scans"
 MODEL_3D_DIR = path.join("..","..","assets","models_3d")
 
 us_scan_route = Blueprint('us_scan',__name__)
@@ -52,17 +52,21 @@ def image_endpoint(id):
     if request.method == 'POST':
         if 'image' not in request.files:
             return jsonify({"error": "No image file provided"}), 400
-
+        print("keys:")
+        print(request.files.keys())
+        print(request.files)
         file = request.files['image']
 
-        if file.filename == '':
-            return jsonify({"error": "No selected file"}), 400
+
+        # if file.filename == '':
+        #     return jsonify({"error": "No selected file"}), 400
 
         if not file.filename.lower().endswith(('.png')):
             return jsonify({"error": "Unsupported file type - only png is supported"}), 400
 
-        image_path = path.join(IMAGE_DIR, f"{id}.png")
+        image_path = IMAGE_DIR+f"/{id}.png"
         file.save(image_path)
+
 
         return jsonify({"success": "Image saved successfully"}), 200
 
