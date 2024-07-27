@@ -30,8 +30,8 @@ export default function Home() {
         <Image
           width={1024}
           height={632}
-          alt="tt.dev hero image"
-          src="/Green_tt.png"
+          alt="/hero_tt.jpg "
+          src="/hero_tt.jpg"
         />
       </div>
       <div className="flex flex-col md:pt-24 md:gap-36 gap-24 items-center">
