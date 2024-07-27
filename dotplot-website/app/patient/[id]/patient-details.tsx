@@ -1,11 +1,15 @@
 import { usePathname } from "next/navigation";
 import { IPatient } from "@/app/models/patient";
 import ExpandableImage from "./expandable-image";
-import './home.css';
+import Link from "next/link";
+import "./home.css";
 
 export default function PatientDetails({ patient }: { patient: IPatient }) {
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-md flex-1" style={{ backgroundColor: '#F0F8FF' }}>
+    <div
+      className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-md flex-1"
+      style={{ backgroundColor: "#F0F8FF" }}
+    >
       <h2 className="text-2xl font-bold mb-4">Patient Details</h2>
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div>
@@ -24,15 +28,24 @@ export default function PatientDetails({ patient }: { patient: IPatient }) {
           <p className="text-lg font-semibold">Weight:</p>
           <p className="text-gray-700">{patient.weight} kg</p>
         </div>
-        <div className="col-span-2">
+        <div className="">
           <p className="text-lg font-semibold">Breast Cancer History:</p>
           <p className="text-gray-700">{patient.bc_history ? "Yes" : "No"}</p>
+        </div>
+        <div className="">
+          <p className="text-lg font-semibold">View 3D Model</p>
+          <Link className="btn ml-2 mt-4" href={`/model/${patient.id}`}>
+            View model
+          </Link>
         </div>
       </div>
 
       <h3 className="text-xl font-bold mb-4">Ultrasound Scans</h3>
       {patient.US_scans.length > 0 ? (
-        <table className="min-w-full bg-white border border-gray-200" style={{ backgroundColor: '#F0F8FF' }}>
+        <table
+          className="min-w-full bg-white border border-gray-200"
+          style={{ backgroundColor: "#F0F8FF" }}
+        >
           <thead>
             <tr>
               <th className="py-2 px-4 border-b-2 border-gray-200 text-left">

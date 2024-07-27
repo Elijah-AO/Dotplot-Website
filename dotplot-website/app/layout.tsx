@@ -16,6 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider             appearance={{
+        elements: {
+            cardBox: "scale-150",
+        }
+      }}>
     <html lang="en" suppressHydrationWarning className="antialiased">
       <Analytics />
       <body className={inter.className}>
@@ -27,8 +32,8 @@ export default function RootLayout({
         >
           <main className={`flex min-h-screen flex-col ${inter.className}`}>
             <Navbar />
-            <div className="flex flex-1 justify-center w-full ">
-              <div className="flex w-full max-w-[1280px] h-full justify-center items-center">
+            <div className="flex flex-1 justify-center w-full pt-8">
+              <div className="flex w-full h-full justify-center items-center">
                 {children}
               </div>
             </div>
@@ -37,5 +42,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }

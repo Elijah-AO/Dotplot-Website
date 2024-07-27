@@ -6,7 +6,7 @@ import Image from 'next/image'
 export default function Footer() {
   return (
     <footer className="flex h-12 items-center justify-center w-full border-t">
-      <div className="w-full max-w-[1280px] md:px-8 px-4 flex place-content-center">
+      <div className="w-full max-w-full md:px-8 px-4 flex place-content-center">
         <div className="gap-x-11 md:flex flex-1 hidden">
           <Link
             href="/"
@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
         <div className="flex max-w-fit items-center gap-x-4">
           <Link
-            href="https://map.sistilli.dev/public/coding/SaaS+Boilerplate"
+            href="https://dotplot.co"
             target="_blank"
             className="pointer block w-fit flex-1"
           >
@@ -35,7 +35,7 @@ export default function Footer() {
             </Typography>
           </Link>
           <Link
-            href="/terms-of-service"
+            href="/dotplot.co"
             className="pointer block w-fit flex-1"
           >
             <Typography variant="p" className="w-max">
@@ -43,7 +43,7 @@ export default function Footer() {
             </Typography>
           </Link>
           <Link
-            href="/privacy-policy"
+            href="/dotplot.co"
             className="pointer block w-fit"
           >
             <Typography variant="p">
