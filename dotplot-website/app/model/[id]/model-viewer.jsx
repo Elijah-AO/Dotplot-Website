@@ -46,6 +46,7 @@ function ModelViewer({ params }) {
     const light2 = new THREE.AmbientLight(0xffffff, 1);
     light2.position.set(-1, -1, -1);
     scene.current.add(light2);
+    let mesh = null;
 
     // Load the GLTF model
     const loader = new GLTFLoader();
@@ -58,12 +59,24 @@ function ModelViewer({ params }) {
 
         // Add model to the scene
         gltf.scene.traverse((child) => {
+          // scene.current.add(child);
           if (child.isMesh) {
-            child.geometry.computeBoundingBox(); // Ensure bounding box is computed
-            child.geometry.computeBoundingSphere(); // Ensure bounding sphere is computed
+            console.log("Loaded Mesh:", child);
+            // scene.current.add(child);
+            // if (mesh) {
+            //   scene.current.remove(mesh);
+            // }
+            mesh = child;
+
+            // child.geometry.computeBoundingBox(); // Ensure bounding box is computed
+            // child.geometry.computeBoundingSphere(); // Ensure bounding sphere is computed
             // Optionally set raycast precision or other settings if needed
           }
+          // scene.current.remove(lastChild);
         });
+        const lastChild =
+          scene.current.children[scene.current.children.length - 2];
+        scene.current.remove(lastChild);
         scene.current.add(gltf.scene);
         gltf.scene.position.set(0, 0, 0);
         gltf.scene.scale.set(1, 1, 1);
@@ -97,10 +110,20 @@ function ModelViewer({ params }) {
     // Handle mouse click
     const handleClick = (event) => {
       // Calculate mouse position in normalized device coordinates
+      const NAVBAR_HEIGHT = 0.125;
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
+      mouse.current.y =
+        -(event.clientY / window.innerHeight) * 2 + 1 + NAVBAR_HEIGHT;
+      console.log(-(event.clientY / window.innerHeight) * 2 + 1);
       // Update the raycaster
+      // let lastChild = scene.current.children[scene.current.children.length - 1];
+
+      // lastChild.updateMatrixWorld();
+      // let lastChild2 =
+      //   scene.current.children[scene.current.children.length - 2];
+
+      // lastChild2.updateMatrixWorld();
+      // console.log(lastChild);
       raycaster.current.setFromCamera(mouse.current, camera);
 
       // Check for intersections with the mesh
@@ -108,21 +131,23 @@ function ModelViewer({ params }) {
         scene.current.children,
         true
       );
+      // console.log(scene);
 
       if (intersects.length > 0) {
         let clickedId = null;
         const intersected = intersects[0];
         const vertexLabels = intersected.object.userData.vertex_labels || {};
-        console.log(vertexLabels);
+        // console.log(vertexLabels);
 
         let count = 0;
         while (vertexLabels[count]) {
           const target_coords = Object.keys(vertexLabels[count])[0].split(",");
           const norm_y = 4 - (intersected.point.y + 0.008) * 40;
           const norm_x = (intersected.point.x + 0.157) * 29 - 1;
+          const THRESHOLD = 1.2;
           if (
-            Math.abs(norm_x - Number(target_coords[1])) < 1 &&
-            Math.abs(norm_y - Number(target_coords[0])) < 1
+            Math.abs(norm_x - Number(target_coords[1])) < THRESHOLD &&
+            Math.abs(norm_y - Number(target_coords[0])) < THRESHOLD
           ) {
             clickedId = Object.values(vertexLabels[count])[0];
             setClickedVertex(clickedId);
@@ -154,7 +179,7 @@ function ModelViewer({ params }) {
       controls.dispose();
 
       // Cleanup DOM element
-      mountRef.current.removeChild(renderer.domElement);
+      // mountRef.current.removeChild(renderer.domElement);
     };
   }, [id]);
 
