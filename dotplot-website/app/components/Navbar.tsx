@@ -11,11 +11,11 @@ export default function Navbar() {
       <div className="">
         <Link href={"/"}>
           <Image
-            className="rounded-full pb-4"
-            src="/tt_logo_light2.png"
+            className="rounded-xl"
+            src="/wide.png" 
             alt="logo"
-            width={170}
-            height={10}
+            width={150}
+            height={50}
           />
         </Link>
       </div>
@@ -27,6 +27,7 @@ export default function Navbar() {
           View Patients
         </Link> */}
         {/* <div className="relative flex flex-col space-y-10 justify-center overflow-hidden py-6 sm:py-12"> */}
+        {/*
         <Link
           className="bg-gradient-to-b w-max mx-auto text-blue-500 font-semibold from-slate-50 to-blue-100 px-10 py-3 rounded-2xl shadow-lg shadow-blue-950  transform hover:scale-95 hover:shadow-sm transition-all duration-300 ease-in-out border-b-4 border-blue-600"
           href={"/patient"}
@@ -37,6 +38,7 @@ export default function Navbar() {
         >
           View Patients
         </Link>
+        */}
         {/* </div> */}
       </div>
       <div className="flex-none">
@@ -47,7 +49,7 @@ export default function Navbar() {
             </button>
           </li>
           <li>
-            <button className="btn bg-secondary text-primary border-none">
+            <button className="btn bg-secondary text-primary border-none hover:bg-tertiary">
               <Link href={"/signup"}>Sign Up</Link>
             </button>
           </li>
