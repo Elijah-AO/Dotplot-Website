@@ -3,7 +3,6 @@ import PatientDetails from "./patient-details";
 import Navbar from "@/app/components/Navbar";
 import Link from "next/link";
 
-
 export default async function Patient({ params }: { params: { id: string } }) {
   const { id } = params;
   const res = await fetch(`http://localhost:5000/api/patient/${id}`);

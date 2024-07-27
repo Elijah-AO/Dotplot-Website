@@ -6,25 +6,23 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-    theme: {
-        container: {
-          center: true,
-          padding: '2rem',
-          screens: {
-            '2xl': '1400px'
-          }
-        },
-        extend: {
-          colors: {
-            primary: '#FFF8F3',
-            secondary: '#405D72', 
-            tertiary: '#758694',
-            blk: '#000000',
-        }
-        }
-    }, 
-  plugins: [
-    require("daisyui"),
-  ],
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        primary: "#FFF8F3",
+        secondary: "#120032",
+        tertiary: "#758694",
+        blk: "#000000",
+      },
+    },
+  },
+  plugins: [require("daisyui")],
 };
 export default config;

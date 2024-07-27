@@ -8,7 +8,7 @@ import PatientDetails from "./patient-details";
 
 function ModelViewer({ params }) {
   const { id } = params;
-  const scene = new THREE.Scene();
+  const scene = useRef(new THREE.Scene());
   const mountRef = useRef(null);
   const [clickedScanId, setClickedVertex] = useState(null);
 
@@ -16,8 +16,6 @@ function ModelViewer({ params }) {
   const mouse = useRef(new THREE.Vector2());
 
   useEffect(() => {
-    // Create scene
-
     // Create camera
     const camera = new THREE.PerspectiveCamera(
       75, // Field of view
@@ -28,34 +26,53 @@ function ModelViewer({ params }) {
     camera.position.set(0, 0, 5); // Set initial camera position
 
     // Create renderer
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
 
     // Add lighting
     const light1 = new THREE.DirectionalLight(0xffffff, 3);
     light1.position.set(5, 5, 5);
-    scene.add(light1);
+    scene.current.add(light1);
 
     const light3 = new THREE.DirectionalLight(0xffffff, 3);
     light3.position.set(5, 5, -5);
-    scene.add(light3);
+    scene.current.add(light3);
 
     const light4 = new THREE.DirectionalLight(0xffffff, 3);
     light4.position.set(-5, 5, 5);
-    scene.add(light4);
+    scene.current.add(light4);
 
     const light2 = new THREE.AmbientLight(0xffffff, 1);
     light2.position.set(-1, -1, -1);
-    scene.add(light2);
+    scene.current.add(light2);
 
     // Load the GLTF model
     const loader = new GLTFLoader();
-    loader.load(`http://127.0.0.1:5000/api/us-scan/model3D/${id}`, (gltf) => {
-      scene.add(gltf.scene);
-      gltf.scene.position.set(0, 0, 0);
-      gltf.scene.scale.set(1, 1, 1);
-    });
+    loader.load(
+      `http://127.0.0.1:5000/api/us-scan/model3D/${id}`,
+      (gltf) => {
+        // Remove existing objects from the scene if necessary
+        // (uncomment if objects should not be duplicated)
+        // scene.current.clear();
+
+        // Add model to the scene
+        gltf.scene.traverse((child) => {
+          if (child.isMesh) {
+            child.geometry.computeBoundingBox(); // Ensure bounding box is computed
+            child.geometry.computeBoundingSphere(); // Ensure bounding sphere is computed
+            // Optionally set raycast precision or other settings if needed
+          }
+        });
+        scene.current.add(gltf.scene);
+        gltf.scene.position.set(0, 0, 0);
+        gltf.scene.scale.set(1, 1, 1);
+      },
+      undefined,
+      (error) => {
+        console.error("An error happened", error);
+      }
+    );
 
     // Set up OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -63,11 +80,12 @@ function ModelViewer({ params }) {
     controls.dampingFactor = 0.25;
     controls.enableZoom = true;
     controls.zoomSpeed = 1.2;
-    controls.maxDistance = 0.9;
-    controls.minDistance = 0.1;
-    controls.enablePan = false;
-    controls.maxAzimuthAngle = Math.PI / 2;
-    controls.minAzimuthAngle = -Math.PI / 2;
+    controls.maxDistance = 0.8; // Adjusted max distance
+    controls.minDistance = 0.1; // Adjusted min distance
+    controls.enablePan = true; // Enable panning
+    controls.maxAzimuthAngle = Infinity; // Allow full 360 rotation
+    controls.minAzimuthAngle = -Infinity;
+
     // Handle window resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -87,7 +105,7 @@ function ModelViewer({ params }) {
 
       // Check for intersections with the mesh
       const intersects = raycaster.current.intersectObjects(
-        scene.children,
+        scene.current.children,
         true
       );
 
@@ -95,6 +113,8 @@ function ModelViewer({ params }) {
         let clickedId = null;
         const intersected = intersects[0];
         const vertexLabels = intersected.object.userData.vertex_labels || {};
+        console.log(vertexLabels);
+
         let count = 0;
         while (vertexLabels[count]) {
           const target_coords = Object.keys(vertexLabels[count])[0].split(",");
@@ -112,39 +132,6 @@ function ModelViewer({ params }) {
         if (!clickedId) {
           setClickedVertex(null);
         }
-        console.log(setClickedVertex);
-
-        // console.log(norm_x);
-        // console.log(Math.abs(norm_y - Number(target_coords[0])) < 1);
-        // console.log(Math.abs(norm_x - Number(target_coords[1])) < 1);
-
-        // const geometry = intersected.object.geometry;
-        // const positionAttribute = geometry.attributes.position;
-
-        // // Find closest vertex
-        // let closestVertexIndex = -1;
-        // let minDistance = Infinity;
-
-        // const point = new THREE.Vector3();
-        // for (let i = 0; i < positionAttribute.count; i++) {
-        //   point.fromBufferAttribute(positionAttribute, i);
-        //   const distance = point.distanceTo(intersected.point);
-        //   if (distance < minDistance) {
-        //     closestVertexIndex = i;
-        //     minDistance = distance;
-        //   }
-        // }
-
-        // // Retrieve label from embedded metadata
-        // const vertexLabels = intersected.object.userData.vertex_labels || {};
-        // if (vertexLabels[closestVertexIndex]) {
-        //   const label = vertexLabels[closestVertexIndex].label;
-        //   // console.log("clicked");
-        //   setClickedVertex(label);
-        // } else {
-        //   // console.log("missed");
-        //   setClickedVertex(null);
-        // }
       }
     };
 
@@ -154,16 +141,22 @@ function ModelViewer({ params }) {
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
-      renderer.render(scene, camera);
+      renderer.render(scene.current, camera);
     };
     animate();
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("click", handleClick);
-      // mountRef.current.removeChild(renderer.domElement);
+
+      // Cleanup renderer and controls
+      renderer.dispose();
+      controls.dispose();
+
+      // Cleanup DOM element
+      mountRef.current.removeChild(renderer.domElement);
     };
-  }, []);
+  }, [id]);
 
   return (
     <div

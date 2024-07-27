@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/model/model.jsx"
+    "app/model/model.jsx",
+    "app/model/[id]/patient-details.jsx"
   ],
   "exclude": ["node_modules"]
 }

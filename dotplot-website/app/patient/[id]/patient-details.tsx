@@ -28,7 +28,7 @@ export default function PatientDetails({ patient }: { patient: IPatient }) {
           <p className="text-lg font-semibold">Weight:</p>
           <p className="text-gray-700">{patient.weight} kg</p>
         </div>
-        <div className="col-span-2">
+        <div className="">
           <p className="text-lg font-semibold">Breast Cancer History:</p>
           <p className="text-gray-700">{patient.bc_history ? "Yes" : "No"}</p>
         </div>
