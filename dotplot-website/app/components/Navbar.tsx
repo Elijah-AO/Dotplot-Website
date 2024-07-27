@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { color } from "three/examples/jsm/nodes/Nodes.js";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   return (
@@ -27,7 +28,7 @@ export default function Navbar() {
           View Patients
         </Link> */}
         {/* <div className="relative flex flex-col space-y-10 justify-center overflow-hidden py-6 sm:py-12"> */}
-        {/*
+        <SignedIn>
         <Link
           className="bg-gradient-to-b w-max mx-auto text-blue-500 font-semibold from-slate-50 to-blue-100 px-10 py-3 rounded-2xl shadow-lg shadow-blue-950  transform hover:scale-95 hover:shadow-sm transition-all duration-300 ease-in-out border-b-4 border-blue-600"
           href={"/patient"}
@@ -38,23 +39,28 @@ export default function Navbar() {
         >
           View Patients
         </Link>
-        */}
+        </SignedIn>
+        
         {/* </div> */}
       </div>
+      <SignedIn>
+        <UserButton showName />
+      </SignedIn>
+      <SignedOut>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 space-x-4">
-          <li>
-            <button className="btn bg-primary text-secondary border-none hover:bg-tertiary rounded-full p-4 pb-7 flex items-center justify-between">
+
+          <li className="btn bg-primary text-secondary border-none hover:bg-tertiary rounded-full">
               <Link href={"/login"}>Log in</Link>
-            </button>
           </li>
-          <li>
-            <button className="btn bg-secondary text-primary border-none hover:bg-tertiary">
+
+          <li className="btn bg-secondary text-primary border-none hover:bg-tertiary">
               <Link href={"/signup"}>Sign Up</Link>
-            </button>
           </li>
+          
         </ul>
       </div>
+        </SignedOut>
     </div>
   );
 }

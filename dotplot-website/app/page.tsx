@@ -3,9 +3,11 @@ import Image from 'next/image'
 import Feature from '@/app/components/feature'
 import { ArrowUpDown, Timer, Workflow } from 'lucide-react'
 import Link from 'next/link'
+import Redirect from './lib/Redirect'
 import './globals.css'
 
 export default function Home() {
+    <Redirect />
   return (
     <div
       className="flex flex-col h-full md:py-36 md:px-32 pt-11 pb-24 px-8 w-full

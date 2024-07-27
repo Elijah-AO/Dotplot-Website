@@ -16,6 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider             appearance={{
+        elements: {
+            cardBox: "scale-150",
+        }
+      }}>
     <html lang="en" suppressHydrationWarning className="antialiased">
       <Analytics />
       <body className={inter.className}>
@@ -37,5 +42,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
