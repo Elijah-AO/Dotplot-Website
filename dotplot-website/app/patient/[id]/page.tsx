@@ -13,7 +13,7 @@ export default async function Patient({ params }: { params: { id: string } }) {
     <>
       <div className="flex flex-row">
         <Link
-          className="m-3 bg-black h-min p-3 hover:bg-gray-900 hover:shadow-md rounded-md text-gray-100 hover:text-gray-400 transition-all duration-200 "
+          className="btn m-3 bg-black h-min p-3 hover:bg-gray-900 hover:shadow-md rounded-md text-gray-100 hover:text-gray-400 transition-all duration-200 "
           href={"/patient"}
         >
           {"<- Back"}

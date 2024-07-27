@@ -28,7 +28,7 @@ export default function RootLayout({
           <main className={`flex min-h-screen flex-col ${inter.className}`}>
             <Navbar />
             <div className="flex flex-1 justify-center w-full ">
-              <div className="flex w-full max-w-[1280px] h-full justify-center items-center">
+              <div className="flex w-full h-full justify-center items-center">
                 {children}
               </div>
             </div>
