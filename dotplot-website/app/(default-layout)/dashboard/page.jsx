@@ -16,9 +16,6 @@ const Dashboard = async () => {
   return (
     <div className=" min-h-screen">
       <div className="container mx-auto py-10 px-4">
-        {/* <h1 className="text-4xl font-bold text-gray-800 mb-10 text-center">
-          Patient Insights Dashboard
-        </h1> */}
         <Typography
           className="max-w-2xl mb-10 text-center text-secondary"
           variant="h1"
@@ -58,15 +55,6 @@ const Dashboard = async () => {
               Frequency of diagnoses recorded each month with a trend line.
             </p>
           </div>
-          {/* <div className="bg-white shadow-md rounded-lg p-6">
-              <h2 className="text-xl font-semibold mb-4 text-gray-700">
-                Scan Diagnoses
-              </h2>
-              <ScanDiagnosesPieChart scans={scans} />
-              <p className="mt-2 text-gray-600">
-                Distribution of scan diagnoses between benign and malignant.
-              </p>
-            </div> */}
           <div className="bg-white shadow-md rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-4 text-gray-700">
               Malignant vs. Benign

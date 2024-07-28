@@ -1,5 +1,3 @@
-// components/MalignantVsBenignChart.js
-
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, Tooltip, Legend, ArcElement, Title } from "chart.js";
 

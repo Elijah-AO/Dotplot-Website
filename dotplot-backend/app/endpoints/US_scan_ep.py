@@ -13,7 +13,7 @@ us_scan_route = Blueprint('us_scan',__name__)
 def us_scan_endpoint():
     if request.method == 'GET':
         scans = [scan.to_dict() for scan in US_scan_db.get_all()]
-        return scans
+        return scans,200
 
 @us_scan_route.route('/us-scan/<id>',methods=['GET','POST'])
 def get_us_scan(id):

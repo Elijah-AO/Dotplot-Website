@@ -37,7 +37,6 @@ const DiagnosisFrequencyChart = ({ scans }) => {
 
   const dataPoints = labels.map((label) => scansByMonth[label]);
 
-  // Calculate a simple moving average (SMA) for the trend line
   const calculateSMA = (data, windowSize) => {
     let sma = [];
     for (let i = 0; i < data.length; i++) {
@@ -74,8 +73,8 @@ const DiagnosisFrequencyChart = ({ scans }) => {
         borderColor: "#35cbb8",
         borderWidth: 2,
         fill: false,
-        borderDash: [5, 5], // Dashed line for trend
-        pointRadius: 0, // No points on trend line
+        borderDash: [5, 5],
+        pointRadius: 0,
       },
     ],
   };

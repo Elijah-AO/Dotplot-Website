@@ -17,23 +17,20 @@ function ModelViewer({ params }) {
   const mouse = useRef(new THREE.Vector2());
 
   useEffect(() => {
-    // Create camera
     const camera = new THREE.PerspectiveCamera(
-      75, // Field of view
-      window.innerWidth / window.innerHeight, // Aspect ratio
-      0.1, // Near clipping plane
-      1000 // Far clipping plane
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
     );
     console.log(window.innerWidth);
     camera.position.set(0, 0, 5); // Set initial camera position
     scene.current.background = new THREE.Color(0x120032);
 
-    // Create renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
 
-    // Add lighting
     const light1 = new THREE.DirectionalLight(0xffffff, 3);
     light1.position.set(5, 5, 5);
     scene.current.add(light1);
@@ -50,45 +47,10 @@ function ModelViewer({ params }) {
     light2.position.set(-1, -1, -1);
     scene.current.add(light2);
 
-    // Load the GLTF model
     const loader = new GLTFLoader();
     loader.load(
       `http://127.0.0.1:5000/api/us-scan/model3D/${id}`,
       (gltf) => {
-        // Add new model
-
-        // // Add new model
-        // gltf.scene.traverse((child) => {
-        //   if (child.isMesh) {
-        //     child.geometry.computeBoundingBox();
-        //     child.geometry.computeBoundingSphere();
-        //     scene.add(child);
-        //   }
-        // });
-        // Remove existing objects from the scene if necessary
-        // (uncomment if objects should not be duplicated)
-        // scene.current.clear();
-
-        // Add model to the scene
-        // gltf.scene.traverse((child) => {
-        // scene.current.add(child);
-        // if (child.isMesh) {
-        // console.log("Loaded Mesh:", child);
-        // scene.current.add(child);
-        // if (mesh) {
-        //   scene.current.remove(mesh);
-        // }
-        // mesh = child;
-
-        // child.geometry.computeBoundingBox(); // Ensure bounding box is computed
-        // child.geometry.computeBoundingSphere(); // Ensure bounding sphere is computed
-        // Optionally set raycast precision or other settings if needed
-        // }
-        // scene.current.remove(lastChild);
-        // });
-        // const lastChild =
-        //   scene.current.children[scene.current.children.length - 2];
-        // scene.current.remove(lastChild);
         scene.current.add(gltf.scene);
         gltf.scene.position.set(0, 0, 0);
         gltf.scene.scale.set(1, 1, 1);
@@ -126,31 +88,18 @@ function ModelViewer({ params }) {
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y =
         -(event.clientY / window.innerHeight) * 2 + 1 + NAVBAR_HEIGHT;
-      // console.log(-(event.clientY / window.innerHeight) * 2 + 1);
       console.log(mouse.current.y);
-      // Update the raycaster
-      // let lastChild = scene.current.children[scene.current.children.length - 1];
-
-      // lastChild.updateMatrixWorld();
-      // let lastChild2 =
-      //   scene.current.children[scene.current.children.length - 2];
-
-      // lastChild2.updateMatrixWorld();
-      // console.log(lastChild);
       raycaster.current.setFromCamera(mouse.current, camera);
 
-      // Check for intersections with the mesh
       const intersects = raycaster.current.intersectObjects(
         scene.current.children,
         true
       );
-      // console.log(scene);
 
       if (intersects.length > 0) {
         let clickedId = null;
         const intersected = intersects[0];
         const vertexLabels = intersected.object.userData.vertex_labels || {};
-        // console.log(vertexLabels);
 
         let count = 0;
         let distance = Infinity;
@@ -194,12 +143,8 @@ function ModelViewer({ params }) {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("click", handleClick);
 
-      // Cleanup renderer and controls
       renderer.dispose();
       controls.dispose();
-
-      // Cleanup DOM element
-      // mountRef.current.removeChild(renderer.domElement);
     };
   }, [id]);
 
