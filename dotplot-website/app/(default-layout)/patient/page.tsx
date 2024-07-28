@@ -2,7 +2,6 @@ import PatientList from "./patient_list";
 import { IPatient } from "@/app/models/patient";
 import Link from "next/link";
 
-
 export default async function Patients() {
   var patients: IPatient[] = [];
   try {
@@ -14,10 +13,10 @@ export default async function Patients() {
     };
   }
   return (
-    <div className="">
+    <div className="flex justify-center items-center flex-col">
       <Link href="/addPatient">
-        <button className="m-3 bg-black h-min p-3 hover:bg-gray-900 hover:shadow-md rounded-md text-gray-100 hover:text-gray-400 transition-all duration-200 ">
-          Add New Patient
+        <button className="m-3 bg-primary h-min p-3 hover:bg-black hover:shadow-md rounded-md text-secondary font-semibold hover:text-gray-100 transition-all duration-200 ">
+          + Add New Patient
         </button>
       </Link>
 

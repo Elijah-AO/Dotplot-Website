@@ -5,6 +5,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import ScanDetails from "./scan-details";
 import PatientDetails from "./patient-details";
+import { min } from "three/examples/jsm/nodes/Nodes.js";
 
 function ModelViewer({ params }) {
   const { id } = params;
@@ -23,7 +24,9 @@ function ModelViewer({ params }) {
       0.1, // Near clipping plane
       1000 // Far clipping plane
     );
+    console.log(window.innerWidth);
     camera.position.set(0, 0, 5); // Set initial camera position
+    scene.current.background = new THREE.Color(0x120032);
 
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -46,37 +49,46 @@ function ModelViewer({ params }) {
     const light2 = new THREE.AmbientLight(0xffffff, 1);
     light2.position.set(-1, -1, -1);
     scene.current.add(light2);
-    let mesh = null;
 
     // Load the GLTF model
     const loader = new GLTFLoader();
     loader.load(
       `http://127.0.0.1:5000/api/us-scan/model3D/${id}`,
       (gltf) => {
+        // Add new model
+
+        // // Add new model
+        // gltf.scene.traverse((child) => {
+        //   if (child.isMesh) {
+        //     child.geometry.computeBoundingBox();
+        //     child.geometry.computeBoundingSphere();
+        //     scene.add(child);
+        //   }
+        // });
         // Remove existing objects from the scene if necessary
         // (uncomment if objects should not be duplicated)
         // scene.current.clear();
 
         // Add model to the scene
-        gltf.scene.traverse((child) => {
-          // scene.current.add(child);
-          if (child.isMesh) {
-            console.log("Loaded Mesh:", child);
-            // scene.current.add(child);
-            // if (mesh) {
-            //   scene.current.remove(mesh);
-            // }
-            mesh = child;
+        // gltf.scene.traverse((child) => {
+        // scene.current.add(child);
+        // if (child.isMesh) {
+        // console.log("Loaded Mesh:", child);
+        // scene.current.add(child);
+        // if (mesh) {
+        //   scene.current.remove(mesh);
+        // }
+        // mesh = child;
 
-            // child.geometry.computeBoundingBox(); // Ensure bounding box is computed
-            // child.geometry.computeBoundingSphere(); // Ensure bounding sphere is computed
-            // Optionally set raycast precision or other settings if needed
-          }
-          // scene.current.remove(lastChild);
-        });
-        const lastChild =
-          scene.current.children[scene.current.children.length - 2];
-        scene.current.remove(lastChild);
+        // child.geometry.computeBoundingBox(); // Ensure bounding box is computed
+        // child.geometry.computeBoundingSphere(); // Ensure bounding sphere is computed
+        // Optionally set raycast precision or other settings if needed
+        // }
+        // scene.current.remove(lastChild);
+        // });
+        // const lastChild =
+        //   scene.current.children[scene.current.children.length - 2];
+        // scene.current.remove(lastChild);
         scene.current.add(gltf.scene);
         gltf.scene.position.set(0, 0, 0);
         gltf.scene.scale.set(1, 1, 1);
@@ -110,11 +122,12 @@ function ModelViewer({ params }) {
     // Handle mouse click
     const handleClick = (event) => {
       // Calculate mouse position in normalized device coordinates
-      const NAVBAR_HEIGHT = 0.125;
+      const NAVBAR_HEIGHT = 0.1774;
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y =
         -(event.clientY / window.innerHeight) * 2 + 1 + NAVBAR_HEIGHT;
-      console.log(-(event.clientY / window.innerHeight) * 2 + 1);
+      // console.log(-(event.clientY / window.innerHeight) * 2 + 1);
+      console.log(mouse.current.y);
       // Update the raycaster
       // let lastChild = scene.current.children[scene.current.children.length - 1];
 
@@ -140,15 +153,22 @@ function ModelViewer({ params }) {
         // console.log(vertexLabels);
 
         let count = 0;
+        let distance = Infinity;
+        let minDistance = Infinity;
         while (vertexLabels[count]) {
           const target_coords = Object.keys(vertexLabels[count])[0].split(",");
           const norm_y = 4 - (intersected.point.y + 0.008) * 40;
           const norm_x = (intersected.point.x + 0.157) * 29 - 1;
-          const THRESHOLD = 1.2;
+          const THRESHOLD = 2;
+          distance =
+            Math.abs(norm_x - Number(target_coords[1])) +
+            Math.abs(norm_y - Number(target_coords[0]));
           if (
             Math.abs(norm_x - Number(target_coords[1])) < THRESHOLD &&
-            Math.abs(norm_y - Number(target_coords[0])) < THRESHOLD
+            Math.abs(norm_y - Number(target_coords[0])) < THRESHOLD &&
+            distance < minDistance
           ) {
+            minDistance = distance;
             clickedId = Object.values(vertexLabels[count])[0];
             setClickedVertex(clickedId);
           }

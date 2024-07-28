@@ -1,25 +1,25 @@
 "use client";
 
-import Typography from '@/app/components/typography'
-import Image from 'next/image'
-import Feature from '@/app/components/feature'
-import { ArrowUpDown, Timer, Workflow } from 'lucide-react'
-import Link from 'next/link'
-import Redirect from './lib/Redirect'
-import './globals.css'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs'
+import Typography from "@/app/components/typography";
+import Image from "next/image";
+import Feature from "@/app/components/feature";
+import { ArrowUpDown, Timer, Workflow } from "lucide-react";
+import Link from "next/link";
+import Redirect from "../lib/Redirect";
+import "../globals.css";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 export default function Home() {
-    const router = useRouter();
-    const { isLoaded, isSignedIn } = useUser();
-  
-    useEffect(() => {
-      if (isLoaded && isSignedIn) {
-        router.push('/dashboard');
-      }
-    }, [isLoaded, isSignedIn, router]);
+  const router = useRouter();
+  const { isLoaded, isSignedIn } = useUser();
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push("/dashboard");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   return (
     <div
@@ -31,19 +31,16 @@ export default function Home() {
           Vital data when it matters most
         </Typography>
         <Typography className="max-w-2xl" variant="h5">
-        Quickly add, find, and update patient records with accurate 3D tumor models 
-          for effective emergency response.
+          Quickly add, find, and update patient records with accurate 3D tumor
+          models for effective emergency response.
         </Typography>
-        <Link
-          href="/signup"
-          target="_blank"
-        >
-          <button className='btn bg-secondary text-primary'>
+        <Link href="/signup" target="_blank">
+          <button className="btn bg-secondary text-primary">
             {`Get Started`}
           </button>
         </Link>
         <Image
-          className='rounded-2xl'
+          className="rounded-2xl"
           width={1023}
           height={632}
           alt="/hero_tt.jpg "
@@ -51,20 +48,19 @@ export default function Home() {
         />
       </div>
       <div className="flex flex-col md:pt-24 md:gap-36 gap-24 items-center w-full md:w-4/5">
-    <div className="flex flex-col gap-12 items-center w-full">
-
+        <div className="flex flex-col gap-12 items-center w-full">
           <Typography className="max-w-2xl" variant="h1">
             Quick solutions, less stress
           </Typography>
           <div className="flex md:flex-row flex-col gap-20 ">
             <Feature
               icon={<Timer size={24} />}
-              headline="Fix emergencies fast" 
+              headline="Fix emergencies fast"
               description="Save 10-20 minutes per patient - no more searching through paper records or outdated systems"
             />
             <Feature
               icon={<ArrowUpDown size={24} />}
-              headline= "Universally compatible"
+              headline="Universally compatible"
               description="Works with PagerDuty, Jira, or custom Slack alerts—Pandem integrates with any system"
             />
             <Feature
@@ -79,11 +75,12 @@ export default function Home() {
             About us
           </Typography>
           <div>
-          At TumorTracker, we specialize in developing advanced 3D models tailored 
-          for healthcare professionals, providing detailed and intuitive visualizations 
-          of patient data. Our innovative solutions enable doctors to effortlessly access 
-          and interpret patient information by simply searching for their names, enhancing 
-          diagnostic accuracy and improving patient care.
+            At TumorTracker, we specialize in developing advanced 3D models
+            tailored for healthcare professionals, providing detailed and
+            intuitive visualizations of patient data. Our innovative solutions
+            enable doctors to effortlessly access and interpret patient
+            information by simply searching for their names, enhancing
+            diagnostic accuracy and improving patient care.
           </div>
         </div>
         <div className="flex flex-col gap-6 items-center">
@@ -91,16 +88,13 @@ export default function Home() {
             Get in touch
           </Typography>
           <div>Book a demo, or hop on a call</div>
-          <Link
-            href="https://dotplot.co/"
-            target="_blank"
-          >
-            <button className='btn bg-secondary text-primary'>
+          <Link href="https://dotplot.co/" target="_blank">
+            <button className="btn bg-secondary text-primary">
               {`Book now`}
             </button>
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }

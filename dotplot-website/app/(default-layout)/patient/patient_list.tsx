@@ -1,6 +1,6 @@
 "use client";
 
-import Dropdown from "../components/dropdown";
+import Dropdown from "../../components/dropdown";
 import { IPatient } from "@/app/models/patient";
 
 import React, { useState, useMemo } from "react";
@@ -80,8 +80,14 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
 
   return (
     <div id="1" className="flex flex-col justify-center items-center">
-      <div className="container mx-auto p-4 content-center" style={{ backgroundColor: '#F0F8FF' }}>
-        <div className="z-10 bg-white shadow-md p-4 flex flex-row" style={{ backgroundColor: '#F0F8FF' }}>
+      <div
+        className="container mx-auto p-4 content-center"
+        style={{ backgroundColor: "#F0F8FF" }}
+      >
+        <div
+          className="z-10 bg-white shadow-md p-4 flex flex-row"
+          style={{ backgroundColor: "#F0F8FF" }}
+        >
           <input
             type="text"
             placeholder={`Search by ${filterKey}`}
@@ -99,7 +105,10 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
             }
           ></Dropdown>
         </div>
-        <table className="min-w-full bg-white border border-gray-200 shadow-sm" style={{ backgroundColor: '#F0F8FF' }}>
+        <table
+          className="min-w-full bg-white border border-gray-200 shadow-sm"
+          style={{ backgroundColor: "#F0F8FF" }}
+        >
           <thead>
             <tr>
               <th
