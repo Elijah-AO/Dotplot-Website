@@ -16,6 +16,7 @@ const AddPatientForm = () => {
 
   const router = useRouter();
 
+  // Entered in the form before submission
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -34,7 +35,7 @@ const AddPatientForm = () => {
     e.preventDefault();
 
     try {
-      // Step 1: Create the patient
+      // POST's to patient endpoint (patient endpoint cannot compensate for scans)
       const patientResponse = await fetch('http://localhost:5000/api/patient', {
         method: 'POST',
         headers: {
@@ -52,7 +53,7 @@ const AddPatientForm = () => {
       const patientData = await patientResponse.json();
 
       if (scan) {
-        // Step 2: Upload the scan for the created patient
+        // Seperately posts us_scan endpoint
         const scanFormData = new FormData();
         scanFormData.append('scan', scan);
         scanFormData.append('patient_id', patientData.id);
