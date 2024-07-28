@@ -1,37 +1,78 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const AddPatientForm = () => {
   const [formData, setFormData] = useState({
-    patient_name: "",
-    age: "",
-    height: "",
-    weight: "",
-    bc_history: "",
+    patient_name: '',
+    age: '',
+    height: '',
+    weight: '',
+    bc_history: '',
   });
+
+  const [scan, setScan] = useState<File | null>(null);
+
   const router = useRouter();
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setScan(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/patient", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    if (response.ok) {
-      alert("Patient added successfully");
-      router.push("/patient"); // Redirect to patient list
-    } else {
-      alert("Failed to add patient");
+
+    try {
+      // Step 1: Create the patient
+      const patientResponse = await fetch('http://localhost:5000/api/patient', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!patientResponse.ok) {
+        const errorData = await patientResponse.json();
+        alert('Failed to add patient: ' + (errorData.error || patientResponse.statusText));
+        return;
+      }
+
+      const patientData = await patientResponse.json();
+
+      if (scan) {
+        // Step 2: Upload the scan for the created patient
+        const scanFormData = new FormData();
+        scanFormData.append('scan', scan);
+        scanFormData.append('patient_id', patientData.id);
+
+        const scanResponse = await fetch('http://localhost:5000/api/us-scan', {
+          method: 'POST',
+          body: scanFormData,
+        });
+
+        if (!scanResponse.ok) {
+          const errorData = await scanResponse.json();
+          alert('Failed to add scan: ' + (errorData.error || scanResponse.statusText));
+          return;
+        }
+      }
+
+      alert('Patient and scan added successfully');
+      router.push('/patient'); // Redirect to patient list after patient has been aded
+    } catch (error) {
+      console.error('Error during fetch:', error);
     }
   };
 
@@ -101,6 +142,16 @@ const AddPatientForm = () => {
             <option value="false">No</option>
           </select>
         </div>
+        <div>
+          <label className="block text-gray-700">Upload Scan</label>
+          <input
+            type="file"
+            name="scan"
+            onChange={handleFileChange}
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+            required
+          />
+        </div>
         <button
           type="submit"
           className="w-full p-2 bg-blue-500 hover:bg-blue-900 transition-all duration-300 rounded-full text-white mt-2"
@@ -114,5 +165,4 @@ const AddPatientForm = () => {
     </div>
   );
 };
-
 export default AddPatientForm;
