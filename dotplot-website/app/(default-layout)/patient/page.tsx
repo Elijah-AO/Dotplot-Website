@@ -15,7 +15,7 @@ export default async function Patients() {
   return (
     <div className="flex justify-center items-center flex-col">
       <Link href="/addPatient">
-        <button className="m-3 bg-primary h-min p-3 hover:bg-black hover:shadow-md rounded-md text-secondary font-semibold hover:text-gray-100 transition-all duration-200 ">
+        <button className="m-3 bg-white h-min p-3 hover:bg-black shadow-xl hover:shadow-md rounded-md text-secondary font-semibold hover:text-gray-100 transition-all duration-200 ">
           + Add New Patient
         </button>
       </Link>

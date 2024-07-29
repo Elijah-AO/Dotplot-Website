@@ -4,22 +4,15 @@
 
 /* globals.css */
 :root {
-    --custom-primary: #120032;
-    --custom-secondary: #FFF8F3;
-  }
-  
-  body {
-    background-color: var(--custom-primary);
-    color: var(--custom-secondary);
-  }
-  
-  
- tr {
-    color:black
- }
+  --custom-primary: #120032;
+  --custom-secondary: #fff8f3;
+}
 
+body {
+  background-color: var(--custom-primary);
+  color: var(--custom-secondary);
+}
 
-
- 
-
- 
+tr {
+  color: black;
+}
