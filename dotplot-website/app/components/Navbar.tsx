@@ -8,7 +8,7 @@ export default function Navbar() {
   return (
     <div
       className="navbar justify-between items-center"
-      style={{ backgroundColor: "#35cbb8" }}
+      style={{ backgroundColor: "#020a14" }}
     >
       <div className="flex-1">
         <Link href={"/"}>
