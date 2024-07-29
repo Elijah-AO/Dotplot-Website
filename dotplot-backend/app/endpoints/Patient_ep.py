@@ -55,3 +55,6 @@ def get_patient(id):
     
     if request.method == 'GET':
         return patient.to_dict()
+    if request.method == 'DELETE':
+        patient_db.delete_(patient)
+        return {"msg":"patient deleted successfully"}

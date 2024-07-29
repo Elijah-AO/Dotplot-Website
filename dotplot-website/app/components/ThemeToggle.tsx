@@ -20,9 +20,13 @@ const ThemeToggle = () => {
     if (theme === "dark") {
       root.style.setProperty("--custom-primary", "#FFF8F3");
       root.style.setProperty("--custom-secondary", "#120032");
+      root.style.setProperty("--custom-blk", "#000000");
+      root.style.setProperty("--custom-wht", "#FFFFFF");
     } else {
       root.style.setProperty("--custom-primary", "#120032");
       root.style.setProperty("--custom-secondary", "#FFF8F3");
+      root.style.setProperty("--custom-blk", "#FFFFFF");
+      root.style.setProperty("--custom-wht", "#000000");
     }
 
     localStorage.setItem("theme", theme);

@@ -48,7 +48,7 @@ class US_scan(db.Model):
     coordinates: Mapped[str] = mapped_column(String(2),nullable=False)
     scan_date: Mapped[date] = mapped_column(Date,nullable=False)
     diagnosis: Mapped[str] = mapped_column(String(20),nullable=False)
-    patient_id: Mapped[int] = mapped_column(ForeignKey('patient.id'),nullable=False)
+    patient_id: Mapped[int] = mapped_column(ForeignKey('patient.id'),nullable=True)
 
     # patient = db.relationship('Patient')
 

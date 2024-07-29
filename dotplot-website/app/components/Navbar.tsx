@@ -41,6 +41,18 @@ export default function Navbar() {
             View Patients
           </Link>
         </SignedIn>
+        <SignedIn>
+          <Link
+            className="bg-gradient-to-b w-max mx-auto text-blue-500 font-semibold from-slate-50 to-blue-100 px-10 py-3 rounded-2xl  shadow-blue-950  transform hover:scale-95 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out border-b-4 border-blue-600"
+            href={"/scans"}
+            style={{
+              color: "#120032",
+              // boxShadow: "0 20px 20px -12px #120032",
+            }}
+          >
+            View Scans
+          </Link>
+        </SignedIn>
 
         {/* </div> */}
       </div>
@@ -52,7 +64,7 @@ export default function Navbar() {
           <UserButton showName />
         </SignedIn>
         <SignedOut>
-          <ul className="menu menu-horizontal px-1 space-x-4 flex items-center">
+          <ul className="menu menu-horizontal px-1 space-x-4 flex items-center w-max">
             <li className="btn bg-primary text-secondary border-none hover:bg-tertiary rounded-full">
               <Link href={"/login"}>Log in</Link>
             </li>

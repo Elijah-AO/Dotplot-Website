@@ -20,6 +20,10 @@ const config: Config = {
         secondary: "#120032",
         tertiary: "#758694",
         blk: "#000000",
+        wht: "#ffffff",
+      },
+      minWidth: {
+        "150": "50rem",
       },
     },
   },

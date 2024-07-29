@@ -34,9 +34,9 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
       return <span style={{ color: "black" }}>{title} ⇅</span>;
     }
     return sortConfig.direction === "ascending" ? (
-      <span style={{ color: "red" }}>{title} ↑</span>
-    ) : (
       <span style={{ color: "red" }}>{title} ↓</span>
+    ) : (
+      <span style={{ color: "red" }}>{title} ↑</span>
     );
   };
 
@@ -79,21 +79,21 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
   }
 
   return (
-    <div id="1" className="flex flex-col justify-center items-center">
+    <div id="1" className="flex flex-col justify-center items-center shadow-lg">
       <div
         className="container mx-auto p-4 content-center"
-        style={{ backgroundColor: "#F0F8FF" }}
+        style={{ backgroundColor: "#FFFFFF" }}
       >
         <div
           className="z-10 bg-white shadow-md p-4 flex flex-row"
-          style={{ backgroundColor: "#F0F8FF" }}
+          style={{ backgroundColor: "#FFFFFF" }}
         >
           <input
             type="text"
             placeholder={`Search by ${filterKey}`}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="mb-4 p-4 border rounded-md w-full"
+            className="mb-4 p-4 border rounded-md w-full text-black font-semibold"
           />
           <Dropdown
             options={["Id", "Name", "Age", "Height", "Weight", "BC History"]}
@@ -107,7 +107,7 @@ export default function PatientList({ patients }: { patients: IPatient[] }) {
         </div>
         <table
           className="min-w-full bg-white border border-gray-200 shadow-sm"
-          style={{ backgroundColor: "#F0F8FF" }}
+          // style={{ backgroundColor: "#F0F8FF" }}
         >
           <thead>
             <tr>

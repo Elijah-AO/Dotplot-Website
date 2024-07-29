@@ -90,7 +90,7 @@ const AddPatientForm = () => {
             name="patient_name"
             value={formData.patient_name}
             onChange={handleChange}
-            className="w-full p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1"
+            className="w-96 p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1 bg-black"
             required
           />
         </div>
@@ -101,7 +101,7 @@ const AddPatientForm = () => {
             name="age"
             value={formData.age}
             onChange={handleChange}
-            className="w-full p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1"
+            className="w-full p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1 bg-black"
             required
           />
         </div>
@@ -112,7 +112,7 @@ const AddPatientForm = () => {
             name="height"
             value={formData.height}
             onChange={handleChange}
-            className="w-full p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1"
+            className="w-full p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1 bg-black"
             required
           />
         </div>
@@ -123,7 +123,7 @@ const AddPatientForm = () => {
             name="weight"
             value={formData.weight}
             onChange={handleChange}
-            className="w-full p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1"
+            className="w-full p-4 pl-6 border rounded-full text-xs focus:text-lg transition-all duration-300 border-gray-300 mt-1 bg-black"
             required
           />
         </div>
@@ -135,7 +135,7 @@ const AddPatientForm = () => {
             name="bc_history"
             value={formData.bc_history}
             onChange={handleChange}
-            className="w-full p-4 pl-6 border rounded-full text-xs mt-1"
+            className="w-full p-4 pl-6 border rounded-full text-xs mt-1  bg-black"
             required
           >
             <option value="">Select</option>
